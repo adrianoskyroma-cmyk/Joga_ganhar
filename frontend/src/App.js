@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
+import { AdMob } from '@capacitor-community/admob';
 import '@/App.css';
 
 import LoginPage from './pages/LoginPage';
@@ -20,6 +21,23 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
+  // Inicializar AdMob
+  useEffect(() => {
+    const initAdMob = async () => {
+      try {
+        await AdMob.initialize({
+          requestTrackingAuthorization: true,
+          initializeForTesting: false
+        });
+        console.log('AdMob initialized successfully');
+      } catch (error) {
+        console.error('AdMob initialization error:', error);
+      }
+    };
+    
+    initAdMob();
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
