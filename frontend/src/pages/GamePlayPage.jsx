@@ -73,7 +73,12 @@ export default function GamePlayPage() {
 
   const watchEntryAd = async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Preparar e mostrar anúncio intersticial real
+      await AdMob.prepareInterstitial({
+        adId: 'ca-app-pub-1117855481975276/6364865851',
+      });
+
+      await AdMob.showInterstitial();
       
       const completeResponse = await axios.post(`${API}/ads/complete`, {
         user_id: user.id,
@@ -88,7 +93,11 @@ export default function GamePlayPage() {
       setShowEntryAd(false);
       startGameSession();
     } catch (error) {
-      toast.error('Erro ao processar anúncio');
+      console.error('Interstitial ad error:', error);
+      // Fallback: continuar mesmo se anúncio falhar
+      setShowEntryAd(false);
+      startGameSession();
+      toast.info('Anúncio não disponível, continuando...');
     }
   };
 
