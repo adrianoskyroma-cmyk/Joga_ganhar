@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ArrowLeft, Play, Pause, Trophy, Coins } from 'lucide-react';
 import { toast } from 'sonner';
+import { AdMob, AdMobRewardItem } from '@capacitor-community/admob';
 import AdBanner from '../components/AdBanner';
 import SnakeGame from '../components/games/SnakeGame';
 import FlappyGame from '../components/games/FlappyGame';
