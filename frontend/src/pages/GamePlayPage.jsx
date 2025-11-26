@@ -178,7 +178,9 @@ export default function GamePlayPage() {
         }
       }, 1000);
     } catch (error) {
-      toast.error('Erro ao processar anúncio');
+      console.error('Rewarded ad error:', error);
+      setShowRewardedAd(false);
+      toast.error('Erro ao exibir anúncio. Tente novamente.');
     }
   };
 
