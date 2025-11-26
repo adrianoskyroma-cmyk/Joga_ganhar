@@ -130,7 +130,19 @@ export default function GamePlayPage() {
 
   const watchRewardedAd = async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Preparar e mostrar anúncio recompensado real
+      await AdMob.prepareRewardVideoAd({
+        adId: 'ca-app-pub-1117855481975276/5027733451',
+      });
+
+      const result = await AdMob.showRewardVideoAd();
+      
+      // Verificar se o usuário assistiu completamente
+      if (!result.rewarded) {
+        toast.info('Assista o anúncio completo para ganhar moedas');
+        setShowRewardedAd(false);
+        return;
+      }
       
       const completeResponse = await axios.post(`${API}/ads/complete`, {
         user_id: user.id,
