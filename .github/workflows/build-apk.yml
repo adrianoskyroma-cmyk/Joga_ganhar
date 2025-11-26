@@ -1,141 +1,51 @@
-APP: MINI-JOGOS + ...
-
-Buy
-right arrow
-
-Como adicionar workflow link direto?
-
-Nov 26, 01:33 AM
-
-Vou te guiar passo a passo de forma bem visual! Aqui está o processo completo:
-
-Created
-/app/ADICIONAR_WORKFLOW_PASSO_A_PASSO.md
-Nov 26, 01:33 AM
-
-Rollback
-
-Agora vou te passar as instruções de forma ainda mais simples:
-
-Summary: ## 🎯 INSTRUÇÕES SUPER SIMPLES - Adicionar Workflow
-
-### PASSO 1: CLIQUE AQUI 👇
-
-**Link mágico** (abre e cria o arquivo automaticamente):
-
-👉 https://github.com/adrianoskyroma-cmyk/Joga_ganhar/new/main?filename=.github/workflows/build-apk.yml
-
----
-
-### PASSO 2: COLE O CÓDIGO 📋
-
-Quando a página abrir, **copie e cole este código**:
-
-```yaml
-
 name: Build APK
 
 on:
-
-push:
-
-branches: [ main, master ]
-
-workflow_dispatch:
+  workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
-
-build:
-
-runs-on: ubuntu-latest
-
-
-steps:
-
-- uses: actions/checkout@v3
-
-
-- name: Setup Node.js
-
-uses: actions/setup-node@v3
-
-with:
-
-node-version: '20'
-
-
-- name: Setup Java
-
-uses: actions/setup-java@v3
-
-with:
-
-distribution: 'temurin'
-
-java-version: '17'
-
-
-- name: Install dependencies
-
-run: |
-
-cd frontend
-
-yarn install
-
-
-- name: Build React App
-
-run: |
-
-cd frontend
-
-GENERATE_SOURCEMAP=false yarn build
-
-
-- name: Sync Capacitor
-
-run: |
-
-cd frontend
-
-npx cap sync android
-
-
-- name: Build APK
-
-run: |
-
-cd frontend/android
-
-chmod +x gradlew
-
-./gradlew assembleDebug
-
-
-- name: Upload APK
-
-uses: actions/upload-artifact@v3
-
-with:
-
-name: jogar-ganhar-apk
-
-path: frontend/android/app/build/outputs/apk/debug/app-debug.apk
-
-
-- name: Create Release
-
-uses: softprops/action-gh-release@v1
-
-if: startsWith(github.ref, 'refs/tags/')
-
-with:
-
-files: frontend/android/app/build/outputs/apk/debug/app-debug.apk
-
-env:
-
-GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-```
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
+      - name: Install dependencies
+        run: |
+          cd frontend
+          yarn install
+          
+      - name: Build React App
+        run: |
+          cd frontend
+          GENERATE_SOURCEMAP=false yarn build
+          
+      - name: Sync Capacitor
+        run: |
+          cd frontend
+          npx cap sync android
+          
+      - name: Build APK
+        run: |
+          cd frontend/android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+          
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: jogar-ganhar-apk
+          path: frontend/android/app/build/outputs/apk/debug/app-debug.apk
