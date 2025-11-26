@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Jogar Ganhar</string>
+    <string name="title_activity_main">Jogar Ganhar</string>
+    <string name="package_name">com.jogarganhar.app</string>
+    <string name="custom_url_scheme">com.jogarganhar.app</string>
+</resources>
